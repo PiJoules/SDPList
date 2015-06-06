@@ -9,65 +9,11 @@
     <meta content="I can't think of any ideas for a senior design project, so I made this website to find one." name='description'>
     <meta content="I, can't, come, up, with , any, senior, design, project, ideas" name='keywords'>
 
-    <link href="//d2h3sltx127pvt.cloudfront.net/assets/application-593ac2d710cff9652fd296e393bb67f0.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/type.css" rel="stylesheet" type="text/css" />
 
+    <script type="text/javascript" src="/static/js/type.js"></script>
 
-    <script type="text/javascript">
-        //<![CDATA[
-        window._rollbarConfig = {
-            "accessToken": "e36e9edcd88b416780f0ebe64497cb59",
-            "captureUncaught": true,
-            "globalAlias": "AL_Rollbar",
-            "rollbarJsUrl": "//d2h3sltx127pvt.cloudfront.net/assets/rollbar/rollbar-5547155d613925e881d599a882fec980.js",
-            "payload": {
-                "environment": "production_js",
-                "client": {
-                    "javascript": {
-                        "code_version": "8b2d37147bc5834d5f57a729d41aba005b8a2deb",
-                        "source_map_enabled": true,
-                        "guess_uncaught_frames": true
-                    }
-                },
-                "context": "home#home_gs",
-                "person": {
-                    "id": null,
-                    "username": null,
-                    "email": null
-                }
-            }
-        };
-        //]]>
-    </script>
-
-    <script>
-        (function(d) {
-            var config = {
-                    kitId: 'jdy1kdx',
-                    scriptTimeout: 3000
-                },
-                h = d.documentElement,
-                t = setTimeout(function() {
-                    h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";
-                }, config.scriptTimeout),
-                tk = d.createElement("script"),
-                f = false,
-                s = d.getElementsByTagName("script")[0],
-                a;
-            h.className += " wf-loading";
-            tk.src = '//use.typekit.net/' + config.kitId + '.js';
-            tk.async = true;
-            tk.onload = tk.onreadystatechange = function() {
-                a = this.readyState;
-                if (f || a && a != "complete" && a != "loaded") return;
-                f = true;
-                clearTimeout(t);
-                try {
-                    Typekit.load(config)
-                } catch (e) {}
-            };
-            s.parentNode.insertBefore(tk, s)
-        })(document);
-    </script>
     <!--[if lt IE 9]>  <![endif]-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -146,24 +92,6 @@
     <script type='text/javascript'>
         //<![CDATA[
         //]]>
-    </script>
-    <script>
-        var _sf_startpt = (new Date()).getTime();
-
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-17693728-1']);
-        _gaq.push(['_setCustomVar', 1, 'user_signed_in', "false", 2]);
-        _gaq.push(['_trackPageview']);
-        _gaq.push(['_trackPageLoadTime']);
-
-        (function() {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
     </script>
 
 </head>
