@@ -1,0 +1,88 @@
+.head {
+	text-align: center;
+	padding-top: 50px;
+	padding-bottom: 30px;
+}
+.head .title {
+	font-family: "helvetica neue",aktiv-grotesk-std,helvetica,arial,freesans,"liberation sans","numbus sans l",sans-serif;
+	font-weight: 100;
+	font-size: 60px;
+}
+.head .lead {
+	color: #adadad;
+	font-weight: 200;
+	padding-top: 30px;
+	padding-bottom: 50px;
+}
+
+.project-container .photo-container {
+	width: 94px;
+	height: 94px;
+	border-radius: 5px;
+	overflow: hidden;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 5px;
+	border: 1px solid #EEE;
+	background-color: #F8F9FA;
+	line-height: 80px;
+	vertical-align: middle;
+}
+.project-container .photo-container img {
+	max-height: 82px;
+	max-width: 82px;
+	min-height: inherit;
+	width: 100%;
+	border: none;
+	padding: 0;
+	vertical-align: middle;
+}
+
+.projects {
+	padding-top: 40px;
+}
+
+.project-container{
+	width: 94px;
+	display: inline-block;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+.student-container {
+	width: 184px;
+	height: 280px;
+	margin-left: 20px;
+	margin-right: 20px;
+	display: inline-block;
+
+	background-color: rgb(252,252,252);
+	border: 1px solid rgb(234,234,234);
+}
+.student-container .top {
+	width: 100%;
+	height: 140px;
+	display: inline-block;
+}
+.student-container .middle {
+	width: 100%;
+	height: 70px;
+	display: inline-block;
+}
+.student-container .bottom {
+	width: 100%;
+	height: 70px;
+	display: inline-block;
+}
+.student-container .photo-container {
+	width: 140px;
+	height: 100px;
+	margin-top: 20px;
+	overflow: hidden;
+	display: inline-block;
+	background: no-repeat center center;
+}
+.student-container .gray {
+	color: #888;
+}

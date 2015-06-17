@@ -17,8 +17,9 @@ client = MongoClientConnection().connection.SDP
 # Root directory
 @app.route('/')
 def index():
-	projects = client.projects.find(limit=6)
-	return render_template("index.html", projects=list(projects))
+	projects = list(client.projects.find(limit=6))
+	students = list(client.students.find(limit=4))
+	return render_template("index.html", projects=projects, students=students)
 
 
 if __name__ == '__main__':
