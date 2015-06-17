@@ -9,3 +9,4 @@ class MongoClientConnection:
     def __init__(self):
         self.connection = MongoClient("<MongoDB URI>")
 ```
+
