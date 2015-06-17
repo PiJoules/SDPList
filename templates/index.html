@@ -1,177 +1,117 @@
-<!DOCTYPE html>
-<html lang="en">
 
-	<head>
-	    <meta charset="utf-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "base.html" %}
 
-	    <meta name="description" content="Lol, I can;t come up with any ideas.">
-	    <meta name="author" content="Ayy, lmao">
-
-	    <title>I have no ideas</title>
-
-	    <!-- Bootstrap core CSS -->
-	    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-	    <link rel="stylesheet" type="text/css" href="/static/css/white-navbar.css" />
-	    <link rel="stylesheet" type="text/css" href="/static/css/type.css" />
-	    <link rel="stylesheet" type="text/css" href="/static/css/index.css" />
-
-	</head>
-
-	<body>
-
-		<nav class="navbar navbar-default">
-		    <div class="container">
-		        <div class="navbar-header">
-		            <a href="#" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-		                <span class="sr-only">Toggle navigation</span>
-		                <span class="icon-bar"></span>
-		                <span class="icon-bar"></span>
-		                <span class="icon-bar"></span>
-		            </button>
-		            <a class="navbar-brand" href="/">¯\_(ツ)_/¯</a>
-		        </div>
-
-		        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		            <ul class="nav navbar-nav">
-		                <li><a href="#">Projects</a></li>
-		                <li><a href="#">Students</a></li>
-		                <li><a href="#">Advisors</a></li>
-		            </ul>
-		        </div>
-		    </div>
-		</nav>
-
-	    <div class="container">
-
-	    	<div class="row">
-	    		<div class="col-lg-12">
-			        <div class="head">
-			            <h1 class="title">Senior Design Projects</h1>
-			            <p class="lead">
-			            	Find projects · Post ideas · Collaborate
-			            </p>
-			            <p>
-			            	<div class="btn-group">
-				            	<a href="#" class="btn btn-primary btn-lg">Find a project</a>
-				            	<a href="#" class="btn btn-default btn-lg">Post a project</a>
-				            	<a href="#" class="btn btn-primary btn-lg">Find a position</a>
-				            	<a href="#" class="btn btn-default btn-lg">Post a position</a>
-			            	</div>
-			            </p>
-			        </div>
-		        </div>
+{% block content %}
+	<div class="row">
+		<div class="col-lg-12">
+	        <div class="head">
+	            <h1 class="title">Senior Design Projects</h1>
+	            <p class="lead">
+	            	Find projects · Post ideas · Collaborate
+	            </p>
+	            <p>
+	            	<div class="btn-group">
+		            	<a href="#" class="btn btn-primary btn-lg">Find a project</a>
+		            	<a href="#" class="btn btn-default btn-lg">Post a project</a>
+		            	<a href="#" class="btn btn-primary btn-lg">Find a position</a>
+		            	<a href="#" class="btn btn-default btn-lg">Post a position</a>
+	            	</div>
+	            </p>
 	        </div>
+        </div>
+    </div>
 
-	        <div class="projects row">
-	        	<div class="col-lg-10 col-lg-offset-1 text-center">
-		        	{% for project in projects %}
-						<div class="project-container">
-								<div class="photo-container">
-									<a href="{{ project.link }}">
-										<img alt="{{ project.title }}" src="{{ project.iconURL }}" />
-									</a>
-								</div>
-								<h5 class="text-center">
-									<a href="{{ project.link }}">{{ project.title }}</a>
-								</h5>
+    <div class="projects row">
+    	<div class="col-lg-10 col-lg-offset-1 text-center">
+        	{% for project in projects %}
+				<div class="project-container">
+						<div class="photo-container">
+							<a href="{{ project.link }}">
+								<img alt="{{ project.title }}" src="{{ project.iconURL }}" />
+							</a>
 						</div>
-					{% endfor %}
-	        	</div>
+						<h5 class="text-center">
+							<a href="{{ project.link }}">{{ project.title }}</a>
+						</h5>
+				</div>
+			{% endfor %}
+    	</div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+		<div class="col-lg-12">
+	        <div class="head">
+	            <h1 class="title">Find partners to work with</h1>
+	            <p class="lead">
+	            	Search for other students who want to work on exciting projects
+	            </p>
+	            <div class="row">
+	            	<div class="col-lg-10 col-lg-offset-1 text-center">
+	            		{% for student in students %}
+		            		<div class="student-container text-center">
+		            			<div class="top">
+		            				<div class="photo-container" style="background-image: url({{ student.photo }});"></div>
+		            			</div>
+		            			<div class="middle">
+		            				<h4>{{ student.firstName }} {{ student.lastName }}</h4>
+		            				<h6>{{ student.major }}</h6>
+		            			</div>
+		            			<div class="bottom">
+			            			<h5 style="color: #888;">Interested in</h5>
+			            			<h5>{{ student.interests.0 }} & {{ student.interests.1 }}</h5>
+		            			</div>
+		            		</div>
+	            		{% endfor %}
+	            	</div>
+	            </div>
 	        </div>
+        </div>
+        <div class="col-lg-12 text-center">
+        	<div class="btn-group">
+        		<a href="#" class="btn btn-primary btn-lg">Find students</a>
+        		<a href="#" class="btn btn-default btn-lg">Register as a student</a>
+        	</div>
+        </div>
+    </div>
 
-	        <hr>
+    <hr>
 
-	        <div class="row">
-	    		<div class="col-lg-12">
-			        <div class="head">
-			            <h1 class="title">Find partners to work with</h1>
-			            <p class="lead">
-			            	Search for other students who want to work on exciting projects
-			            </p>
-			            <div class="row">
-			            	<div class="col-lg-10 col-lg-offset-1 text-center">
-			            		{% for student in students %}
-				            		<div class="student-container text-center">
-				            			<div class="top">
-				            				<div class="photo-container" style="background-image: url({{ student.photo }});"></div>
-				            			</div>
-				            			<div class="middle">
-				            				<h4>{{ student.firstName }} {{ student.lastName }}</h4>
-				            				<h6>{{ student.major }}</h6>
-				            			</div>
-				            			<div class="bottom">
-					            			<h5 style="color: #888;">Interested in</h5>
-					            			<h5>{{ student.interests.0 }} & {{ student.interests.1 }}</h5>
-				            			</div>
-				            		</div>
-			            		{% endfor %}
-			            	</div>
-			            </div>
-			        </div>
-		        </div>
-		        <div class="col-lg-12 text-center">
-		        	<div class="btn-group">
-		        		<a href="#" class="btn btn-primary btn-lg">Find students</a>
-		        		<a href="#" class="btn btn-default btn-lg">Register as a student</a>
-		        	</div>
-		        </div>
+    <div class="row">
+		<div class="col-lg-12">
+	        <div class="head">
+	            <h1 class="title">Find advisers to help you</h1>
+	            <p class="lead">
+	            	Get guidence from professors and teachers who can help manage your team
+	            </p>
+	            <div class="row">
+	            	<div class="col-lg-10 col-lg-offset-1 text-center">
+	            		{% for adviser in advisers %}
+		            		<div class="student-container text-center">
+		            			<div class="top">
+		            				<div class="photo-container" style="background-image: url({{ adviser.photo }});"></div>
+		            			</div>
+		            			<div class="middle">
+		            				<h4>{{ adviser.firstName }} {{ adviser.lastName }}</h4>
+		            				<h6>{{ adviser.major }}</h6>
+		            			</div>
+		            			<div class="bottom">
+			            			<h5 style="color: #888;">Interested in</h5>
+			            			<h5>{{ adviser.interests.0 }} & {{ adviser.interests.1 }}</h5>
+		            			</div>
+		            		</div>
+	            		{% endfor %}
+	            	</div>
+	            </div>
 	        </div>
+        </div>
+        <div class="col-lg-12 text-center">
+        	<div class="btn-group">
+        		<a href="#" class="btn btn-primary btn-lg">Find advisers</a>
+        		<a href="#" class="btn btn-default btn-lg">Register as an adviser</a>
+        	</div>
+        </div>
+    </div>
 
-	        <hr>
-
-	        <div class="row">
-	    		<div class="col-lg-12">
-			        <div class="head">
-			            <h1 class="title">Find advisors to help you</h1>
-			            <p class="lead">
-			            	Get guidence from professors and teachers who can help manage your team
-			            </p>
-			            <div class="row">
-			            	<div class="col-lg-10 col-lg-offset-1 text-center">
-			            		{% for advisor in advisors %}
-				            		<div class="student-container text-center">
-				            			<div class="top">
-				            				<div class="photo-container" style="background-image: url({{ advisor.photo }});"></div>
-				            			</div>
-				            			<div class="middle">
-				            				<h4>{{ advisor.firstName }} {{ advisor.lastName }}</h4>
-				            				<h6>{{ advisor.major }}</h6>
-				            			</div>
-				            			<div class="bottom">
-					            			<h5 style="color: #888;">Interested in</h5>
-					            			<h5>{{ advisor.interests.0 }} & {{ advisor.interests.1 }}</h5>
-				            			</div>
-				            		</div>
-			            		{% endfor %}
-			            	</div>
-			            </div>
-			        </div>
-		        </div>
-		        <div class="col-lg-12 text-center">
-		        	<div class="btn-group">
-		        		<a href="#" class="btn btn-primary btn-lg">Find advisors</a>
-		        		<a href="#" class="btn btn-default btn-lg">Register as an advisor</a>
-		        	</div>
-		        </div>
-	        </div>
-
-	    </div>
-
-		<footer class="footer">
-			<div class="container">
-				<p class="text-muted">
-					<a href="#">About</a> | 
-					<a href="#">Students</a> | 
-					<a href="#">Advisors</a>
-				</p>
-			</div>
-		</footer>
-
-
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	</body>
-
-</html>
+{% endblock %}
