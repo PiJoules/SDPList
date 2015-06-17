@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Clear anything already in lib/ except the README
 shopt -s extglob
 rm -rf lib/!(README.md)
