@@ -40,8 +40,8 @@ def index():
 	if "linkedin_token" in session:
 		pass
 	projects = list(client.projects.find(limit=5))
-	students = list(client.students.find(limit=4))
-	advisers = list(client.advisers.find(limit=4))
+	students = list(client.people.find({"type": "student"}, limit=4))
+	advisers = list(client.people.find({"type": "adviser"}, limit=4))
 	return render_template("index.html",
 		projects=projects,
 		students=students, 
@@ -69,8 +69,8 @@ def linkedin_authorize():
     #me = linkedin.get('people/~')
     #my_id = me.data["id"]
     more_me = linkedin.get("people/~:(id,first-name,last-name,headline,picture-url,industry,summary,specialties,positions:(id,title,summary,start-date,end-date,is-current,company:(id,name,type,size,industry,ticker)),educations:(id,school-name,field-of-study,start-date,end-date,degree,activities,notes),associations,interests,num-recommenders,date-of-birth,publications:(id,title,publisher:(name),authors:(id,name),date,url,summary),patents:(id,title,summary,number,status:(id,name),office:(name),inventors:(id,name),date,url),languages:(id,language:(name),proficiency:(level,name)),skills:(id,skill:(name)),certifications:(id,name,authority:(name),number,start-date,end-date),courses:(id,name,number),recommendations-received:(id,recommendation-type,recommendation-text,recommender),honors-awards,three-current-positions,three-past-positions,volunteer)")
-    return jsonify(me=more_me.data)
-    #return redirect("/")
+    #return jsonify(me=more_me.data)
+    return redirect("/")
 
 @linkedin.tokengetter
 def get_linkedin_oauth_token():

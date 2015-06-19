@@ -60,7 +60,7 @@
 		            			</div>
 		            			<div class="bottom">
 			            			<h5 style="color: #888;">Interested in</h5>
-			            			<h5>{{ student.interests.0 }} & {{ student.interests.1 }}</h5>
+			            			<h5>{{ student.interests.0 }}{% if student.interests|length > 1 %} & {{ student.interests.1 }}{% endif %}</h5>
 		            			</div>
 		            		</div>
 	            		{% endfor %}
@@ -98,7 +98,7 @@
 		            			</div>
 		            			<div class="bottom">
 			            			<h5 style="color: #888;">Interested in</h5>
-			            			<h5>{{ adviser.interests.0 }} & {{ adviser.interests.1 }}</h5>
+			            			<h5>{{ adviser.interests.0 }}{% if adviser.interests|length > 1 %} & {{ adviser.interests.1 }}{% endif %}</h5>
 		            			</div>
 		            		</div>
 	            		{% endfor %}
