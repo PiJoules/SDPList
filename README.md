@@ -7,7 +7,7 @@ Stuff required on the database.
 ## Collections
 MongoDB collections
 
-### Advisers
+### People
 - keys
   - _id (ObjectId)
   - firstName (string)
@@ -15,15 +15,7 @@ MongoDB collections
   - major (string)
   - interests (array of strings)
   - photo (string)
-
-### Students
-- keys
-  - _id (ObjectId)
-  - firstName (string)
-  - lastName (string)
-  - major (string)
-  - interests (array of strings)
-  - photo (string)
+  - type (string) (student/adviser)
 
 ### Projects
 - keys
