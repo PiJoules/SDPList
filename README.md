@@ -16,6 +16,8 @@ MongoDB collections
   - interests (array of strings)
   - photo (string)
   - type (string) (student/adviser)
+  - joined (ISODate)
+  - email (string)
 
 ### Projects
 - keys
