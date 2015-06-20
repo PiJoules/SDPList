@@ -3,6 +3,7 @@ import vendor
 vendor.add('lib')
 
 from datetime import datetime
+import re
 import pymongo
 from flask_oauthlib.client import OAuth
 
@@ -43,13 +44,13 @@ def index():
 	projects = list(client.projects.find(limit=5))
 	students = list(client.people.find({
 		"type": "student",
-		"major": {"$exists": True},
-		"interests": {"$exists": True}
+		"major": {"$exists": True, "$ne": ""},
+		"interests": {"$exists": True, "$ne": [""]}
 	}, limit=4, sort=[("joined", -1)]))
 	advisers = list(client.people.find({
 		"type": "adviser",
-		"major": {"$exists": True},
-		"interests": {"$exists": True}
+		"major": {"$exists": True, "$ne": ""},
+		"interests": {"$exists": True, "$ne": [""]}
 	}, limit=4, sort=[("joined", -1)]))
 	return render_template("index.html",
 		projects=projects,
@@ -60,8 +61,13 @@ def index():
 
 @app.route("/account/")
 def account():
+	if not "linkedin_token" in session:
+		return redirect("/signup/")
+
+	person = client.people.find_one({"email": session["email"]})
 	return render_template("settings.html",
-		signed_in="linkedin_token" in session
+		signed_in="linkedin_token" in session,
+		person=person
 	)
 
 @app.route("/signup/")
@@ -74,6 +80,23 @@ def signup():
 def signup_linkedin():
 	return linkedin.authorize(callback="http://127.0.0.1:5000/auth/linkedin/callback")
 
+@app.route("/update_user", methods=['POST'])
+def update_user():
+	if not "linkedin_token" in session:
+		return redirect("/")
+
+	person = request.form # this is an ImmutableMultiDict, not a dict
+	updated_person = {}
+	for key in person:
+		val = person[key]
+		if key == "interests":
+			updated_person[key] = re.split(',\s*', val)
+		else:
+			updated_person[key] = val
+
+	client.people.update({"email": session["email"]}, {"$set": updated_person})
+	return jsonify(person=updated_person)
+
 @app.route("/auth/linkedin/callback/")
 def linkedin_authorize():
     resp = linkedin.authorized_response()
@@ -84,8 +107,10 @@ def linkedin_authorize():
         )
     session['linkedin_token'] = (resp['access_token'], '')
 
+    # Get as much infromation about the person from basic info and email
     me = linkedin.get("people/~:(id,email-address,first-name,last-name,headline,picture-url,industry,summary,specialties,positions:(id,title,summary,start-date,end-date,is-current,company:(id,name,type,size,industry,ticker)),educations:(id,school-name,field-of-study,start-date,end-date,degree,activities,notes),associations,interests,num-recommenders,date-of-birth,publications:(id,title,publisher:(name),authors:(id,name),date,url,summary),patents:(id,title,summary,number,status:(id,name),office:(name),inventors:(id,name),date,url),languages:(id,language:(name),proficiency:(level,name)),skills:(id,skill:(name)),certifications:(id,name,authority:(name),number,start-date,end-date),courses:(id,name,number),recommendations-received:(id,recommendation-type,recommendation-text,recommender),honors-awards,three-current-positions,three-past-positions,volunteer)")
     data = me.data
+    session["email"] = data["emailAddress"]
 
     # Add new user
     if client.people.find({"email": data["emailAddress"]}).count() <= 0:
@@ -93,6 +118,7 @@ def linkedin_authorize():
     		"email": data["emailAddress"],
     		"firstName": data["firstName"],
     		"lastName": data["lastName"],
+    		"type": "student",
     		"joined": datetime.now()
     	})
 
@@ -117,8 +143,9 @@ linkedin.pre_request = change_linkedin_query
 
 @app.route("/logout/")
 def logout():
-    session.pop('linkedin_token', None)
-    return redirect("/")
+	session.pop("email", None)
+	session.pop('linkedin_token', None)
+	return redirect("/")
 
 if __name__ == '__main__':
     app.run()

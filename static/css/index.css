@@ -59,22 +59,27 @@
 
 	background-color: rgb(252,252,252);
 	border: 1px solid rgb(234,234,234);
+	position: relative;
 }
 .student-container .top {
 	width: 100%;
 	height: 140px;
-	display: inline-block;
+	position: absolute;
+	top: 0;
 }
 .student-container .middle {
 	width: 100%;
 	height: 70px;
-	display: inline-block;
+	position: absolute;
+	top: 140px;
 }
 .student-container .bottom {
 	width: 100%;
 	height: 70px;
-	display: inline-block;
+	position: absolute;
+	bottom: 0;
 }
+
 .student-container .photo-container {
 	width: 140px;
 	height: 100px;
@@ -82,6 +87,7 @@
 	overflow: hidden;
 	display: inline-block;
 	background: no-repeat center center;
+	background-size: cover;
 }
 .student-container .gray {
 	color: #888;

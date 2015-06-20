@@ -53,6 +53,19 @@
 		    </div>
 		</nav>
 
+		<div class="alerts container">
+			<div class="row">
+				<div class="col-lg-6 col-lg-offset-3">
+					<div class="alert alert-success" style="display: none;">
+						<strong>Success</strong>
+					</div>
+					<div class="alert alert-danger" style="display: none;">
+						<strong>Error</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	    {% block content %}{% endblock %}
 
 		<footer class="footer">
@@ -67,8 +80,9 @@
 		</footer>
 
 
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	    <script type="text/javascript" src="/static/js/base.js"></script>
 	    {% block extra_scripts %}{% endblock %}
 	</body>
 

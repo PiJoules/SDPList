@@ -53,10 +53,12 @@
 	            		{% for student in students %}
 		            		<div class="student-container text-center">
 		            			<div class="top">
-		            				<div class="photo-container" style="background-image: url({{ student.photo }});"></div>
+		            				<a href="#">
+		            					<div class="photo-container" style="background-image: url({{ student.photo }});"></div>
+		            				</a>
 		            			</div>
 		            			<div class="middle">
-		            				<h4>{{ student.firstName }} {{ student.lastName }}</h4>
+		            				<h4><a href="">{{ student.firstName }} {{ student.lastName }}</a></h4>
 		            				<h6>{{ student.major }}</h6>
 		            			</div>
 		            			<div class="bottom">
@@ -91,10 +93,12 @@
 	            		{% for adviser in advisers %}
 		            		<div class="student-container text-center">
 		            			<div class="top">
-		            				<div class="photo-container" style="background-image: url({{ adviser.photo }});"></div>
+		            				<a href="#">
+		            					<div class="photo-container" style="background-image: url({{ adviser.photo }});"></div>
+		            				</a>
 		            			</div>
 		            			<div class="middle">
-		            				<h4>{{ adviser.firstName }} {{ adviser.lastName }}</h4>
+		            				<h4><a href="#">{{ adviser.firstName }} {{ adviser.lastName }}</a></h4>
 		            				<h6>{{ adviser.major }}</h6>
 		            			</div>
 		            			<div class="bottom">
