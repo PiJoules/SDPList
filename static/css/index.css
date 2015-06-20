@@ -52,7 +52,7 @@
 
 .student-container {
 	width: 184px;
-	height: 280px;
+	height: 260px;
 	margin-left: 20px;
 	margin-right: 20px;
 	display: inline-block;
@@ -63,7 +63,7 @@
 }
 .student-container .top {
 	width: 100%;
-	height: 140px;
+	height: 120px;
 	position: absolute;
 	top: 0;
 }
@@ -71,7 +71,7 @@
 	width: 100%;
 	height: 70px;
 	position: absolute;
-	top: 140px;
+	top: 120px;
 }
 .student-container .bottom {
 	width: 100%;
@@ -81,8 +81,8 @@
 }
 
 .student-container .photo-container {
-	width: 140px;
-	height: 100px;
+	width: 80px;
+	height: 80px;
 	margin-top: 20px;
 	overflow: hidden;
 	display: inline-block;

@@ -6,9 +6,10 @@ from datetime import datetime
 import re
 import pymongo
 from flask_oauthlib.client import OAuth
+from bson.objectid import ObjectId
 
 # Import the Flask Framework
-from flask import Flask, render_template, redirect, url_for, session, request, jsonify
+from flask import Flask, render_template, redirect, url_for, session, request, jsonify, abort
 app = Flask(__name__)
 oauth = OAuth(app)
 
@@ -39,8 +40,6 @@ linkedin = oauth.remote_app(
 # Root directory
 @app.route("/")
 def index():
-	if "linkedin_token" in session:
-		pass
 	projects = list(client.projects.find(limit=5))
 	students = list(client.people.find({
 		"type": "student",
@@ -56,23 +55,38 @@ def index():
 		projects=projects,
 		students=students, 
 		advisers=advisers, 
-		signed_in="linkedin_token" in session
+		signed_in=is_signed_in()
 	)
 
 @app.route("/account/")
 def account():
-	if not "linkedin_token" in session:
+	if not is_signed_in():
 		return redirect("/signup/")
 
 	person = client.people.find_one({"email": session["email"]})
 	return render_template("settings.html",
-		signed_in="linkedin_token" in session,
+		signed_in=is_signed_in(),
+		person=person
+	)
+
+@app.route("/user/<user_id>/")
+def profile(user_id):
+	if not ObjectId.is_valid(user_id):
+		abort(404)
+		
+	objID = ObjectId(user_id)
+	if client.people.find({"_id": objID}).count() <= 0:
+		abort(404)
+
+	person = client.people.find_one({"_id": objID})
+	return render_template("wall.html",
+		signed_in=is_signed_in(),
 		person=person
 	)
 
 @app.route("/signup/")
 def signup():
-	if "linkedin_token" in session:
+	if is_signed_in():
 		return redirect("/")
 	return render_template("signup.html")
 
@@ -82,7 +96,7 @@ def signup_linkedin():
 
 @app.route("/update_user", methods=['POST'])
 def update_user():
-	if not "linkedin_token" in session:
+	if not is_signed_in():
 		return redirect("/")
 
 	person = request.form # this is an ImmutableMultiDict, not a dict
@@ -124,6 +138,16 @@ def linkedin_authorize():
 
     return redirect("/")
 
+@app.route("/logout/")
+def logout():
+	session.pop("email", None)
+	session.pop('linkedin_token', None)
+	return redirect("/")
+
+@app.errorhandler(404)
+def page_not_found(error):
+	return render_template('page_not_found.html'), 404
+
 @linkedin.tokengetter
 def get_linkedin_oauth_token():
     return session.get('linkedin_token')
@@ -139,13 +163,10 @@ def change_linkedin_query(uri, headers, body):
             uri += '?oauth2_access_token=' + auth
     return uri, headers, body
 
-linkedin.pre_request = change_linkedin_query
+def is_signed_in():
+	return "linkedin_token" in session
 
-@app.route("/logout/")
-def logout():
-	session.pop("email", None)
-	session.pop('linkedin_token', None)
-	return redirect("/")
+linkedin.pre_request = change_linkedin_query
 
 if __name__ == '__main__':
     app.run()

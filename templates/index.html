@@ -26,14 +26,14 @@
     	<div class="col-lg-10 col-lg-offset-1 text-center">
         	{% for project in projects %}
 				<div class="project-container">
-						<div class="photo-container">
-							<a href="{{ project.link }}">
-								<img alt="{{ project.title }}" src="{{ project.iconURL }}" />
-							</a>
-						</div>
-						<h5 class="text-center">
-							<a href="{{ project.link }}">{{ project.title }}</a>
-						</h5>
+					<div class="photo-container">
+						<a href="{{ project.link }}">
+							<img alt="{{ project.title }}" src="{{ project.iconURL }}" />
+						</a>
+					</div>
+					<h5 class="text-center">
+						<a href="{{ project.link }}">{{ project.title }}</a>
+					</h5>
 				</div>
 			{% endfor %}
     	</div>
@@ -53,12 +53,12 @@
 	            		{% for student in students %}
 		            		<div class="student-container text-center">
 		            			<div class="top">
-		            				<a href="#">
+		            				<a href="/user/{{ student._id }}">
 		            					<div class="photo-container" style="background-image: url({{ student.photo }});"></div>
 		            				</a>
 		            			</div>
 		            			<div class="middle">
-		            				<h4><a href="">{{ student.firstName }} {{ student.lastName }}</a></h4>
+		            				<h4><a href="/user/{{ student._id }}">{{ student.firstName }} {{ student.lastName }}</a></h4>
 		            				<h6>{{ student.major }}</h6>
 		            			</div>
 		            			<div class="bottom">
@@ -93,12 +93,12 @@
 	            		{% for adviser in advisers %}
 		            		<div class="student-container text-center">
 		            			<div class="top">
-		            				<a href="#">
+		            				<a href="/user/{{ adviser._id }}">
 		            					<div class="photo-container" style="background-image: url({{ adviser.photo }});"></div>
 		            				</a>
 		            			</div>
 		            			<div class="middle">
-		            				<h4><a href="#">{{ adviser.firstName }} {{ adviser.lastName }}</a></h4>
+		            				<h4><a href="/user/{{ adviser._id }}">{{ adviser.firstName }} {{ adviser.lastName }}</a></h4>
 		            				<h6>{{ adviser.major }}</h6>
 		            			</div>
 		            			<div class="bottom">

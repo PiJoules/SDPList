@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+<style type="text/css">
+	body {
+		background-color: #e9eaec;
+	}
+
+	.main {
+		background-color: white;
+		border-radius: 5px;
+		padding-bottom: 20px;
+	}
+
+	.fancy {
+		font-family: "helvetica neue",aktiv-grotesk-std,helvetica,arial,freesans,"liberation sans","numbus sans l",sans-serif;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="main col-lg-12">
+			<h1 class="fancy text-center">{{ person.firstName }} {{ person.lastName }}</h1>
+			<div class="row">
+				{{ person | safe }}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
