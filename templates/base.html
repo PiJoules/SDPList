@@ -45,6 +45,7 @@
 						{% if not signed_in %}
 					    	<li><a href="/signup">Log in / Sign up</a></li>
 					    {% else %}
+					    	<li><a href="/account">My account</a></li>
 					    	<li><a href="/logout">Logout</a></li>
 						{% endif %}
 					</ul>
@@ -52,9 +53,7 @@
 		    </div>
 		</nav>
 
-	    <div class="container">
-	    	{% block content %}{% endblock %}
-	    </div>
+	    {% block content %}{% endblock %}
 
 		<footer class="footer">
 			<div class="container">

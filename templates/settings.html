@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+<style type="text/css">
+	body {
+		background-color: #e9eaec;
+	}
+
+	.main {
+		background-color: white;
+		border-radius: 5px;
+		padding-bottom: 20px;
+	}
+
+	.fancy {
+		font-family: "helvetica neue",aktiv-grotesk-std,helvetica,arial,freesans,"liberation sans","numbus sans l",sans-serif;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="main col-lg-12">
+			<h1 class="fancy text-center">My account</h1>
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="page-header">
+						<h3>Basic information</h3>
+					</div>
+					<form class="form-horizontal">
+					    <div class="form-group">
+					        <label class="col-sm-3 control-label">First name</label>
+					        <div class="col-sm-9">
+					            <input type="email" class="form-control" placeholder="First name">
+					        </div>
+					    </div>
+					    <div class="form-group">
+					        <label class="col-sm-3 control-label">Last name</label>
+					        <div class="col-sm-9">
+					            <input type="email" class="form-control" placeholder="Last name">
+					        </div>
+					    </div>
+					    <div class="form-group">
+					        <div class="col-sm-offset-2 col-sm-10">
+					            <button type="submit" class="btn btn-default">Sign in</button>
+					        </div>
+					    </div>
+					</form>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="page-header">
+						<h3>Links</h3>
+					</div>
+					<form class="form-horizontal">
+					    <div class="form-group">
+					        <label class="col-sm-3 control-label">First name</label>
+					        <div class="col-sm-9">
+					            <input type="email" class="form-control" placeholder="First name">
+					        </div>
+					    </div>
+					    <div class="form-group">
+					        <label class="col-sm-3 control-label">Last name</label>
+					        <div class="col-sm-9">
+					            <input type="email" class="form-control" placeholder="Last name">
+					        </div>
+					    </div>
+					    <div class="form-group">
+					        <div class="col-sm-offset-2 col-sm-10">
+					            <button type="submit" class="btn btn-default">Sign in</button>
+					        </div>
+					    </div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
