@@ -24,6 +24,12 @@
 		<div class="main col-lg-12">
 			<h1 class="fancy text-center">{{ person.firstName }} {{ person.lastName }}</h1>
 			<div class="row">
+				{% if signed_in %}
+					<p>Edit page profile <a href="/account/">here</a>.</p>
+				{% endif %}
+			</div>
+			<div class="row">
+				<h3>Information</h3>
 				{{ person | safe }}
 			</div>
 		</div>

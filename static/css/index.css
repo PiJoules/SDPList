@@ -92,16 +92,3 @@
 .student-container .gray {
 	color: #888;
 }
-
-.footer {
-	text-align: center;
-	margin-top: 50px;
-	padding-top: 30px;
-	min-height: 60px;
-	padding-bottom: 30px;
-	background-color: #333;
-}
-
-.text-muted a {
-	color: #AAA;
-}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+<style type="text/css">
+	body {
+		background-color: #e9eaec;
+	}
+
+	.body {
+		background-color: white;
+		border-radius: 5px;
+		padding-bottom: 20px;
+		padding-top: 20px;
+	}
+
+	.fancy {
+		font-family: "helvetica neue",aktiv-grotesk-std,helvetica,arial,freesans,"liberation sans","numbus sans l",sans-serif;
+	}
+
+	.btn-group-vertical {
+		width: 100%;
+	}
+
+	/* Dear God pleae forgive me, but it just works if it's done this way */
+	.btn-group-vertical .split-left {
+		width: 80% !important;
+		display: inline-block !important;
+		float: left !important;
+	}
+	.btn-group-vertical .split-right {
+		width: calc(20% + 1px) !important;
+		display: inline-block !important;
+		float: left !important;
+		border-top-right-radius: 0px !important;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<h1 class="fancy text-center">Search results for "{{ query }}" in {{ category[0]|upper + category[1:] }}</h1>
+	<div class="row">
+		<div class="col-md-2">
+			<div class="btn-group-vertical">
+
+				<a class="btn btn-default {% if category == 'projects' %}active{% endif %}" href="/search/?q={{ query }}&c=projects">Projects</a>
+				<div class="btn-group">
+					<a class="split-left btn btn-default {% if category in ['people', 'students', 'advisers'] %}active{% endif %}" href="/search/?q={{ query }}&c=people">People</a>
+				    <a class="split-right btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+					<ul class="dropdown-menu">
+					    <li><a class="selected" href="/search/?q={{ query }}&c=students">Students</a></li>
+					    <li><a href="/search/?q={{ query }}&c=advisers">Advisers</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="body col-md-9 col-md-offset-1">
+			{{ results|safe }}
+		</div>
+	</div>
+</div>
+{% endblock %}

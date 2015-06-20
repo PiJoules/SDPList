@@ -73,7 +73,7 @@ def account():
 def profile(user_id):
 	if not ObjectId.is_valid(user_id):
 		abort(404)
-		
+
 	objID = ObjectId(user_id)
 	if client.people.find({"_id": objID}).count() <= 0:
 		abort(404)
@@ -82,6 +82,55 @@ def profile(user_id):
 	return render_template("wall.html",
 		signed_in=is_signed_in(),
 		person=person
+	)
+
+@app.route("/search/")
+def search():
+	query = request.args.get("q")
+	category = request.args.get("c")
+	if not category:
+		category = "projects"
+
+	# Search projects
+	reg = re.compile(".*" + query + ".*", re.IGNORECASE)
+	if category == "projects":
+		results = list(client.projects.find({"title": reg}))
+	elif category == "people":
+		results = list(client.people.find(
+			{ "$or": [
+				{"fullName": reg},
+				{"major": reg}
+			]}
+		))
+	elif category == "students":
+		results = list(client.people.find(
+			{
+				"$or": [
+					{"fullName": reg},
+					{"major": reg}
+				],
+				"type": "student"
+			}
+		))
+	elif category == "advisers":
+		results = list(client.people.find(
+			{
+				"$or": [
+					{"fullName": reg},
+					{"major": reg}
+				],
+				"type": "adviser"
+			}
+		))
+	else:
+		# Search projects by default
+		results = list(client.projects.find({"title": reg}))
+
+	return render_template("search.html",
+		signed_in=is_signed_in(),
+		query=query,
+		results=results,
+		category=category
 	)
 
 @app.route("/signup/")
