@@ -4,6 +4,7 @@ vendor.add('lib')
 
 from datetime import datetime
 import re
+import math
 import pymongo
 from flask_oauthlib.client import OAuth
 from bson.objectid import ObjectId
@@ -36,6 +37,9 @@ linkedin = oauth.remote_app(
     access_token_url='https://www.linkedin.com/uas/oauth2/accessToken',
     authorize_url='https://www.linkedin.com/uas/oauth2/authorization',
 )
+
+page_count = 5 # Amount to display per page on search results
+paginate_count = 5 # Number of paginate indecies to display
 
 # Root directory
 @app.route("/")
@@ -75,7 +79,7 @@ def profile(user_id):
 		abort(404)
 
 	objID = ObjectId(user_id)
-	if client.people.find({"_id": objID}).count() <= 0:
+	if client.people.find({"_id": objID}, limit=1).count(with_limit_and_skip=True) <= 0:
 		abort(404)
 
 	person = client.people.find_one({"_id": objID})
@@ -84,8 +88,28 @@ def profile(user_id):
 		person=person
 	)
 
+@app.route("/project/<project_id>/")
+def project(project_id):
+	if not ObjectId.is_valid(project_id):
+		abort(404)
+
+	objID = ObjectId(project_id)
+	if client.projects.find({"_id": objID}, limit=1).count(with_limit_and_skip=True) <= 0:
+		abort(404)
+
+	project = client.projects.find_one({"_id": objID})
+	return render_template("project.html",
+		signed_in=is_signed_in(),
+		project=project
+	)
+
 @app.route("/search/")
-def search():
+@app.route("/search/page/<num>/")
+def search(num=1):
+	num = int(num)-1
+	if num < 0:
+		num = 0
+
 	query = request.args.get("q")
 	category = request.args.get("c")
 	if not category:
@@ -93,44 +117,59 @@ def search():
 
 	# Search projects
 	reg = re.compile(".*" + query + ".*", re.IGNORECASE)
+	skip = max(0, (num-int(paginate_count/2))*page_count)
+	limit = paginate_count*paginate_count
 	if category == "projects":
-		results = list(client.projects.find({"title": reg}))
+		results = client.projects.find({"title": reg}, skip=skip, limit=limit)
 	elif category == "people":
-		results = list(client.people.find(
+		results = client.people.find(
 			{ "$or": [
 				{"fullName": reg},
 				{"major": reg}
-			]}
-		))
+			]},
+			skip=skip,
+			limit=limit
+		)
 	elif category == "students":
-		results = list(client.people.find(
+		results = client.people.find(
 			{
 				"$or": [
 					{"fullName": reg},
 					{"major": reg}
 				],
 				"type": "student"
-			}
-		))
+			},
+			skip=skip,
+			limit=limit
+		)
 	elif category == "advisers":
-		results = list(client.people.find(
+		results = client.people.find(
 			{
 				"$or": [
 					{"fullName": reg},
 					{"major": reg}
 				],
 				"type": "adviser"
-			}
-		))
+			},
+			skip=skip,
+			limit=limit
+		)
 	else:
 		# Search projects by default
-		results = list(client.projects.find({"title": reg}))
+		results = client.projects.find({"title": reg}, skip=skip, limit=limit)
 
+	results = list(results)
+	first_paginate = max(1, num+1-int(page_count/2))
+	last_paginate = min( num+1+int(page_count/2), int(math.ceil(float(skip+len(results))/page_count)) )
 	return render_template("search.html",
 		signed_in=is_signed_in(),
 		query=query,
-		results=results,
-		category=category
+		results=results[num*page_count:(num+1)*page_count],
+		category=category,
+		page_num=num+1,
+		page_count=page_count,
+		first_paginate=first_paginate,
+		last_paginate=last_paginate
 	)
 
 @app.route("/signup/")
@@ -176,7 +215,7 @@ def linkedin_authorize():
     session["email"] = data["emailAddress"]
 
     # Add new user
-    if client.people.find({"email": data["emailAddress"]}).count() <= 0:
+    if client.people.find({"email": data["emailAddress"]}, limit=1).count(with_limit_and_skip=True) <= 0:
     	client.people.insert({
     		"email": data["emailAddress"],
     		"firstName": data["firstName"],

@@ -33,6 +33,10 @@
 		float: left !important;
 		border-top-right-radius: 0px !important;
 	}
+
+	.body .media-object {
+		width: 64px;
+	}
 </style>
 {% endblock %}
 
@@ -42,7 +46,6 @@
 	<div class="row">
 		<div class="col-md-2">
 			<div class="btn-group-vertical">
-
 				<a class="btn btn-default {% if category == 'projects' %}active{% endif %}" href="/search/?q={{ query }}&c=projects">Projects</a>
 				<div class="btn-group">
 					<a class="split-left btn btn-default {% if category in ['people', 'students', 'advisers'] %}active{% endif %}" href="/search/?q={{ query }}&c=people">People</a>
@@ -55,7 +58,71 @@
 			</div>
 		</div>
 		<div class="body col-md-9 col-md-offset-1">
-			{{ results|safe }}
+			{% for result in results %}
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="media">
+						    <div class="media-left media-middle">
+						        <a href="
+									{% if category == 'projects' %}
+					            		/project/{{ result._id }}/
+					            	{% elif category in ['people', 'students', 'advisers'] %}
+					            		/user/{{ result._id }}/
+					            	{% endif %}
+						        ">
+						            <img class="media-object" src="
+						            	{% if category == 'projects' %}
+						            		{{ result.iconURL }}
+						            	{% elif category in ['people', 'students', 'advisers'] %}
+						            		{{ result.photo }}
+						            	{% endif %}
+						            " alt="
+						            	{% if category == 'projects' %}
+						            		{{ result.title }}
+						            	{% elif category in ['people', 'students', 'advisers'] %}
+						            		{{ result.fullName }}
+						            	{% endif %}
+						            " />
+						        </a>
+						    </div>
+						    <div class="media-body">
+						        <h4 class="media-heading">
+					        		{% if category == 'projects' %}
+					            		{{ result.title }}
+					            	{% elif category in ['people', 'students', 'advisers'] %}
+					            		{{ result.fullName }}
+					            	{% endif %}
+						        </h4>
+						        <p>Description go here</p>
+						    </div>
+						</div>
+					</div>
+				</div>
+				{% if not loop.last %}
+					<hr>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3 text-center">
+			<nav>
+			    <ul class="pagination">
+			        <li class="{% if page_num <= 1 %}disabled{% endif %}">
+			            <a {% if page_num > 1 %}href="/search/page/{{ page_num-1 }}/?q={{ query }}&c={{ category }}"{% endif %}>
+			                <span>&laquo;</span>
+			            </a>
+			        </li>
+			        {% for i in range(first_paginate, last_paginate+1) %}
+			        	<li class="{% if i == page_num %}active{% endif %}"><a href="/search/page/{{ i }}/?q={{ query }}&c={{ category }}">{{ i }}</a></li>
+			        {% endfor %}
+			        <li class="{% if page_num == last_paginate %}disabled{% endif %}">
+			            <a {% if page_num < last_paginate %}href="/search/page/{{ page_num+1 }}/?q={{ query }}&c={{ category }}"{% endif %}>
+			                <span aria-hidden="true">&raquo;</span>
+			            </a>
+			        </li>
+			    </ul>
+			</nav>
 		</div>
 	</div>
 </div>

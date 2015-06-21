@@ -31,12 +31,12 @@
         	{% for project in projects %}
 				<div class="project-container">
 					<div class="photo-container">
-						<a href="{{ project.link }}">
+						<a href="/project/{{ project._id }}/">
 							<img alt="{{ project.title }}" src="{{ project.iconURL }}" />
 						</a>
 					</div>
 					<h5 class="text-center">
-						<a href="{{ project.link }}">{{ project.title }}</a>
+						<a href="/project/{{ project._id }}/">{{ project.title }}</a>
 					</h5>
 				</div>
 			{% endfor %}
