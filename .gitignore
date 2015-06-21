@@ -1,7 +1,6 @@
 *.pyc
 lib/*
 private/*
-dump/
 
 !lib/README.md
 !private/README.md
