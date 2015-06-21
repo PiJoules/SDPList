@@ -12,11 +12,12 @@ MongoDB collections
   - _id (ObjectId)
   - firstName (string)
   - lastName (string)
+  - fullName (string)
   - major (string)
   - interests (array of strings)
   - photo (string)
   - type (string) (student/adviser)
-  - joined (ISODate)
+  - joined (ISODate or Number)
   - email (string)
 
 ### Projects
@@ -25,3 +26,4 @@ MongoDB collections
   - title (string)
   - iconURL (string)
   - link (string)
+  - team (array of ObjectIds)

@@ -44,7 +44,8 @@
 <div class="container">
 	<h1 class="fancy text-center">Search results for "{{ query }}" in {{ category[0]|upper + category[1:] }}</h1>
 	<div class="row">
-		<div class="col-md-2">
+		<div class="col-sm-2">
+			<h3 class="text-center">Filter by</h3>
 			<div class="btn-group-vertical">
 				<a class="btn btn-default {% if category == 'projects' %}active{% endif %}" href="/search/?q={{ query }}&c=projects">Projects</a>
 				<div class="btn-group">
@@ -57,7 +58,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="body col-md-9 col-md-offset-1">
+		<div class="body col-sm-9 col-sm-offset-1">
 			{% for result in results %}
 				<div class="row">
 					<div class="col-lg-12">
@@ -93,7 +94,13 @@
 					            		{{ result.fullName }}
 					            	{% endif %}
 						        </h4>
-						        <p>Description go here</p>
+						        <p>
+					            	{% if category == 'projects' %}
+					            		Team: {{ result.team|safe }}
+					            	{% elif category in ['people', 'students', 'advisers'] %}
+					            		Projects: {{ result.projects|safe }}
+					            	{% endif %}
+						        </p>
 						    </div>
 						</div>
 					</div>

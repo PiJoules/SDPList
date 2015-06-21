@@ -159,12 +159,24 @@ def search(num=1):
 		results = client.projects.find({"title": reg}, skip=skip, limit=limit)
 
 	results = list(results)
+	results_to_display = results[num*page_count:(num+1)*page_count]
+	for i in range(len(results_to_display)):
+		result = results_to_display[i]
+		if category == "projects":
+			team = result["team"] # List of ObjIds
+			people = list(client.people.find({"_id": {"$in": team}}))
+			results_to_display[i]["team"] = people
+		else:
+			personID = result["_id"]
+			projects = list(client.projects.find({"team": personID}))
+			results_to_display[i]["projects"] = projects
+
 	first_paginate = max(1, num+1-int(page_count/2))
 	last_paginate = min( num+1+int(page_count/2), int(math.ceil(float(skip+len(results))/page_count)) )
 	return render_template("search.html",
 		signed_in=is_signed_in(),
 		query=query,
-		results=results[num*page_count:(num+1)*page_count],
+		results=results_to_display,
 		category=category,
 		page_num=num+1,
 		page_count=page_count,
