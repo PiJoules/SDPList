@@ -73,6 +73,15 @@ def account():
 		person=person
 	)
 
+@app.route("/add_project/")
+def add_project():
+	if not is_signed_in():
+		return redirect("/signup/")
+
+	return render_template("add_project.html",
+		signed_in=is_signed_in()
+	)
+
 @app.route("/user/<user_id>/")
 def profile(user_id):
 	if not ObjectId.is_valid(user_id):

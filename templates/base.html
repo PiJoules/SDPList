@@ -12,7 +12,8 @@
 	    <title>I have no ideas</title>
 
 	    <!-- Bootstrap core CSS -->
-	    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+	    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 	    <link rel="stylesheet" type="text/css" href="/static/css/white-navbar.css" />
 	    <link rel="stylesheet" type="text/css" href="/static/css/type.css" />
 	    <link rel="stylesheet" type="text/css" href="/static/css/base.css" />
@@ -58,6 +59,7 @@
 						{% if not signed_in %}
 					    	<li><a href="/signup">Log in / Sign up</a></li>
 					    {% else %}
+					    	<li><a href="/add_project"><span class="glyphicon glyphicon-plus"></span></a></li>
 					    	<li><a href="/account">My account</a></li>
 					    	<li><a href="/logout">Logout</a></li>
 						{% endif %}
@@ -95,6 +97,7 @@
 
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 	    <script type="text/javascript" src="/static/js/base.js"></script>
 	    {% block extra_scripts %}{% endblock %}
 	</body>
