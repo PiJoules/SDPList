@@ -1,25 +1,31 @@
-$(document).ready(function(){
-    var next = 1;
-    $(".add-more").click(function(e){
-        e.preventDefault();
-        var addto = "#field" + next;
-        var addRemove = "#field" + (next);
-        next = next + 1;
-        var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
-        var newInput = $(newIn);
-        var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
-        var removeButton = $(removeBtn);
-        $(addto).after(newInput);
-        $(addRemove).after(removeButton);
-        $("#field" + next).attr('data-source',$(addto).attr('data-source'));
-        $("#count").val(next);  
+$("form.basic-info").submit(function(event){
+    event.preventDefault(); // don't refresh page
 
-        $('.remove-me').click(function(e){
-            e.preventDefault();
-            var fieldNum = this.id.charAt(this.id.length-1);
-            var fieldID = "#field" + fieldNum;
-            $(this).remove();
-            $(fieldID).remove();
+    var inputs = $(this).serializeArray(); // for some reason, returns an array of objects
+
+    // Convert the array of objects to a map
+    var formObj = {};
+    for (var i = 0; i < inputs.length; i++)
+        var val = inputs[i].value;
+        if (typeof val == "string")
+            val = val.trim();
+
+        if (val == "")
+            alert("Do not leave any fields blank.");
+            return;
+        formObj[inputs[i].name] = val;
+
+    if (formObj["firstName"].trim() !== "" && formObj["lastName"].trim() !== ""){
+        $.post("/update_user", formObj, function(response){
+            console.log(response);
+            if (response !== "success"){
+                showSuccess("Successfully updated information");
+            }
+            else {
+                showError("An error occured on the server while updating information");
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown){
+            alert([textStatus, errorThrown]);
         });
-    });    
+    }
 });

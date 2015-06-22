@@ -1,13 +1,13 @@
 # Senior Design Project Ideas
 I can't come up with my own ideas for a senior design project, so I made a website where other people can post their ideas.
 
-# MongoDB
+## MongoDB
 Stuff required on the database.
 
-## Collections
+### Collections
 MongoDB collections
 
-### People
+#### People
 - keys
   - _id (ObjectId)
   - firstName (string)
@@ -20,10 +20,15 @@ MongoDB collections
   - joined (ISODate or Number)
   - email (string)
 
-### Projects
+#### Projects
 - keys
   - _id (ObjectId)
   - title (string)
   - iconURL (string)
   - link (string)
   - team (array of ObjectIds)
+
+## Dependencies
+- https://select2.github.io/
+- Flask
+- pymongo
