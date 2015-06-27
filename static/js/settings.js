@@ -11,12 +11,7 @@ $("form.basic-info").submit(function(event){
     if (formObj["firstName"].trim() !== "" && formObj["lastName"].trim() !== ""){
         $.post("/update_user", formObj, function(response){
             console.log(response);
-            if (response !== "success"){
-                showSuccess("Successfully updated information");
-            }
-            else {
-                showError("An error occured on the server while updating information");
-            }
+            showSuccess("Successfully updated information");
         }).fail(function(jqXHR, textStatus, errorThrown){
             alert([textStatus, errorThrown]);
         });

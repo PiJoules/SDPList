@@ -5,27 +5,27 @@ $("form.basic-info").submit(function(event){
 
     // Convert the array of objects to a map
     var formObj = {};
-    for (var i = 0; i < inputs.length; i++)
+    for (var i = 0; i < inputs.length; i++){
         var val = inputs[i].value;
         if (typeof val == "string")
             val = val.trim();
 
-        if (val == "")
+        if (val == ""){
             alert("Do not leave any fields blank.");
             return;
+        }
         formObj[inputs[i].name] = val;
-
-    if (formObj["firstName"].trim() !== "" && formObj["lastName"].trim() !== ""){
-        $.post("/update_user", formObj, function(response){
-            console.log(response);
-            if (response !== "success"){
-                showSuccess("Successfully updated information");
-            }
-            else {
-                showError("An error occured on the server while updating information");
-            }
-        }).fail(function(jqXHR, textStatus, errorThrown){
-            alert([textStatus, errorThrown]);
-        });
     }
+    console.log(formObj);
+
+    $.post("/add_project", formObj, function(response){
+        if (response === "success"){
+            showSuccess("Successfully updated information");
+        }
+        else {
+            showError(response);
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown){
+        alert([textStatus, errorThrown]);
+    });
 });

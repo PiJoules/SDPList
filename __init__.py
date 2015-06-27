@@ -73,14 +73,27 @@ def account():
 		person=person
 	)
 
-@app.route("/add_project/")
+@app.route("/add_project", methods=["GET", "POST"])
 def add_project():
-	if not is_signed_in():
-		return redirect("/signup/")
+	if request.method == "POST":
+		project = request.form # this is an ImmutableMultiDict, not a dict
+		next_project = {
+			"team": []
+		}
+		for key in project:
+			val = project[key]
+			if key == "":
+				return "Missing parameters"
+			next_project[key] = val
+		client.projects.insert(next_project)
+		return "success"
+	else:
+		if not is_signed_in():
+			return redirect("/signup/")
 
-	return render_template("add_project.html",
-		signed_in=is_signed_in()
-	)
+		return render_template("add_project.html",
+			signed_in=is_signed_in()
+		)
 
 @app.route("/user/<user_id>/")
 def profile(user_id):
